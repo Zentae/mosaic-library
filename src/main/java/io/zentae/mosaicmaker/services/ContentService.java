@@ -1,4 +1,8 @@
-package io.zentae.mosaicmaker;
+package io.zentae.mosaicmaker.services;
+
+import io.zentae.mosaicmaker.services.manager.Service;
+import io.zentae.mosaicmaker.services.manager.ServicesManager;
+import org.slf4j.Logger;
 
 import java.io.*;
 import java.nio.file.FileVisitOption;
@@ -8,16 +12,13 @@ import java.nio.file.Paths;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
-public final class ContentService {
+public final class ContentService extends Service {
 
-    private static ContentService contentService;
+    private final Logger logger;
 
-    private ContentService() {
-        contentService = this;
-    }
-
-    public static ContentService get() {
-        return contentService != null ? contentService : new ContentService();
+    public ContentService(ServicesManager servicesManager) {
+        super(servicesManager);
+        this.logger = servicesManager.getLogger();
     }
 
     public ContentService copyFile(InputStream inputStream, String destination) throws IOException {
@@ -57,7 +58,7 @@ public final class ContentService {
                     .filter(Files::isRegularFile)
                     .map(Path::toFile));
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            logger.error("Failed to get files in directory: " + e.getMessage());
             System.exit(1);
         }
 
