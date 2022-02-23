@@ -21,25 +21,12 @@ import java.util.stream.Stream;
 
 public class MosaicMaker {
 
-    private ServicesManager servicesManager;
-    private ContentService contentService;
-    private ImageService imageService;
-    private ThumbnailRepository thumbnailRepository;
+    private final ServicesManager servicesManager;
+    private final ContentService contentService;
+    private final ImageService imageService;
+    private final ThumbnailRepository thumbnailRepository;
 
-    public MosaicMaker(String thumbnailsPath, String sourceImagePath, String outputPath, int thumbnailSize)
-            throws ImageNotFoundException, MosaicPrintException, ImageReadException, IOException {
-        // Setup services
-        setupServices();
-        // Process the image.
-        Mosaic mosaic = process(thumbnailsPath, sourceImagePath, thumbnailSize);
-        // Print the image.
-        printMosaic(mosaic, outputPath);
-    }
-
-    /**
-     * Set up the services.
-     */
-    private void setupServices() {
+    public MosaicMaker() {
         // Registers services.
         servicesManager = new ServicesManager()
                 .register(Stream.of(ContentService.class, ImageService.class));
@@ -58,11 +45,11 @@ public class MosaicMaker {
      * @param thumbnailSize the thumbnails' size.
      * @return the {@link Mosaic}.
      */
-    private Mosaic process(String thumbnailsPath, String sourceImagePath, int thumbnailSize) throws ImageNotFoundException, ImageReadException, IOException {
+    public Mosaic process(String thumbnailsPath, String sourceImagePath, int thumbnailSize) throws ImageNotFoundException, ImageReadException, IOException {
         // Get source image's file.
         File sourceImageFile = new File(sourceImagePath);
         // Check if the source image exists.
-        if(sourceImageFile == null || !sourceImageFile.exists())
+        if(!sourceImageFile.exists())
             // Throw an exception which will be handled.
             throw new ImageNotFoundException("Unable to find the source image.");
 
@@ -114,7 +101,7 @@ public class MosaicMaker {
      * @param mosaic the {@link Mosaic} to print.
      * @param outputPath the output path.
      */
-    private void printMosaic(Mosaic mosaic, String outputPath) throws MosaicPrintException, ImageReadException {
+    public void printMosaic(Mosaic mosaic, String outputPath) throws MosaicPrintException, ImageReadException {
         // Print the image.
         try {
             ImageIO.write(mosaic.drawMosaic(), "JPEG", new File(outputPath + "mosaic.jpg"));
