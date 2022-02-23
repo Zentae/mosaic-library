@@ -12,12 +12,11 @@ public abstract class Service {
         return servicesManager;
     }
 
-    protected void shutdown(String message, Exception exception) {
-        servicesManager.getLogger().error(message + " " + exception.getMessage());
-        System.exit(-1);
-    }
-
+    /**
+     * Exit the program with status code -1.
+     * @param message the message to display before shutting down.
+     */
     protected void shutdown(String message) {
-        shutdown(message, null);
+        System.exit(-1);
     }
 }

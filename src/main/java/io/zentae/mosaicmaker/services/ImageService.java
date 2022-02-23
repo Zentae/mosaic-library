@@ -2,22 +2,57 @@ package io.zentae.mosaicmaker.services;
 
 import io.zentae.mosaicmaker.services.manager.Service;
 import io.zentae.mosaicmaker.services.manager.ServicesManager;
-import org.slf4j.Logger;
 
-import javax.imageio.ImageIO;
-import javax.imageio.stream.ImageInputStream;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 public class ImageService extends Service {
 
-    private final Logger logger;
-
     public ImageService(ServicesManager servicesManager) {
         super(servicesManager);
-        this.logger = servicesManager.getLogger();
+    }
+
+    /**
+     * Processes the given {@link BufferedImage image}.
+     * @param thumbnail the {@link BufferedImage image} to process.
+     * @param width the target width of the {@link BufferedImage image}.
+     * @param height the target height of the {@link BufferedImage image}.
+     * @return the processed {@link BufferedImage image}.
+     */
+    public BufferedImage processImage(BufferedImage thumbnail, int width, int height) {
+        // Apply grey shade on the thumbnail.
+        thumbnail = toGreyScale(thumbnail);
+        // Resize the thumbnail.
+        thumbnail = resizeImage(thumbnail, width, height);
+        // Returns the thumbnail.
+        return thumbnail;
+    }
+
+    /**
+     * Return the average {@link Color} in the specified area of the {@link BufferedImage}.
+     * @param bi the {@link BufferedImage}.
+     * @param x0 the x upper left coordinate.
+     * @param y0 the y upper left coordinate.
+     * @param w the width.
+     * @param h the height.
+     * @return the average {@link Color}.
+     */
+    public Color getAverageColor(BufferedImage bi, int x0, int y0, int w, int h) {
+        int x1 = x0 + w;
+        int y1 = y0 + h;
+        long sumr = 0, sumg = 0, sumb = 0;
+        int num = w * h;
+
+        for (int x = x0; x < x1; x++) {
+            for (int y = y0; y < y1; y++) {
+                Color pixel = new Color(bi.getRGB(x, y));
+                sumr += pixel.getRed();
+                sumg += pixel.getGreen();
+                sumb += pixel.getBlue();
+            }
+        }
+
+        return new Color((int)sumr / num, (int)sumg / num, (int)sumb / num);
     }
 
     /**
@@ -37,35 +72,26 @@ public class ImageService extends Service {
 
     /**
      * Applies a grayscale filter on a given image.
-     * @param input the source image.
+     * @param image the source image.
      */
-    public BufferedImage toGreyScale(File input) {
-        try {
-            ImageInputStream stream = ImageIO.createImageInputStream(input);
-            BufferedImage image = ImageIO.read(stream);
+    public BufferedImage toGreyScale(BufferedImage image) {
+        int width = image.getWidth();
+        int height = image.getHeight();
 
-            int width = image.getWidth();
-            int height = image.getHeight();
+        for(int y = 0; y < height; y++) {
+            for(int x = 0; x < width; x++) {
+                Color color = new Color(image.getRGB(x, y));
 
-            for(int y = 0; y < height; y++) {
-                for(int x = 0; x < width; x++) {
-                    Color color = new Color(image.getRGB(x, y));
+                int red = (int)(color.getRed() * .2126);
+                int green = (int)(color.getRed() * .7152);
+                int blue = (int)(color.getRed() * .0722);
+                int sum = red + green + blue;
 
-                    int red = (int)(color.getRed() * .2126);
-                    int green = (int)(color.getRed() * .7152);
-                    int blue = (int)(color.getRed() * .0722);
-                    int sum = red + green + blue;
-
-                    Color grayShade = new Color(sum, sum, sum);
-                    image.setRGB(x, y, grayShade.getRGB());
-                }
+                Color grayShade = new Color(sum, sum, sum);
+                image.setRGB(x, y, grayShade.getRGB());
             }
-
-            return image;
-        } catch (IOException exception) {
-            logger.error("Failed to apply grey scale: " + exception.getMessage());
         }
 
-        return null;
+        return image;
     }
 }

@@ -1,119 +1,156 @@
 package io.zentae.mosaicmaker;
 
+import io.zentae.mosaicmaker.exceptions.ImageNotFoundException;
+import io.zentae.mosaicmaker.exceptions.ImageReadException;
+import io.zentae.mosaicmaker.exceptions.MosaicPrintException;
 import io.zentae.mosaicmaker.services.ContentService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import io.zentae.mosaicmaker.services.ImageService;
+import io.zentae.mosaicmaker.services.manager.ServicesManager;
+import io.zentae.mosaicmaker.thumbnails.factories.BaseThumbnailFactory;
+import io.zentae.mosaicmaker.thumbnails.factories.LightThumbnailFactory;
+import io.zentae.mosaicmaker.thumbnails.factories.ThumbnailAbstractFactory;
+import io.zentae.mosaicmaker.thumbnails.factories.ThumbnailFactory;
+import io.zentae.mosaicmaker.thumbnails.repository.ThumbnailRepository;
 
 import javax.imageio.ImageIO;
-import javax.imageio.stream.ImageInputStream;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.stream.Stream;
 
 public class MosaicMaker {
 
-    private final Logger logger = LoggerFactory.getLogger("Mosaic-Maker");
-    private final List<BufferedImage> images = new ArrayList<>();
+    private ServicesManager servicesManager;
+    private ContentService contentService;
+    private ImageService imageService;
+    private ThumbnailRepository thumbnailRepository;
 
-    // input:
-    // -> Images directory
-    // -> Source image
-    // -> Size in pixels
-
-    // Actions to be performed
-    // -> Appliquer le filtre gris, les resize et les stocker (vignettes)
-    // -> Redimensionner l'image source (pour que largeur et hauteur = multiple de p)
-    //
-
-
-    public MosaicMaker() throws IOException {
-        // Get the image
-        /*String imagePath = getClass().getResource("/11547842.jpg").getPath();
-        File output = new File(System.getProperty("user.dir") + "/salam.jpg");
-        output.createNewFile();
-
-        ImageIO.write(toGreyScale(new File(imagePath)), "JPEG", output); */
-        String imagesDir = "/src/main/resources/database";
-
-        int height = 20;
-        int width = 20;
-
-        ContentService.get().getFilesInDirectory(imagesDir, files ->
-            files.forEach(file ->
-                images.add(resizeImage(toGreyScale(file), width, height))));
-
-        for(int i = 0; i < images.size(); i++) {
-            try {
-                File file = new File(System.getProperty("user.dir") + "/" + i + ".jpg");
-                file.createNewFile();
-
-                ImageIO.write(images.get(i), "JPEG", file);
-            } catch (IOException exception) {
-                exception.printStackTrace();
-            }
-        }
-    }
-
-
-    /*
-     * Where bi is your image, (x0,y0) is your upper left coordinate, and (w,h)
-     * are your width and height respectively
-     */
-    public Color averageColor(BufferedImage bi, int x0, int y0, int w, int h) {
-        int x1 = x0 + w;
-        int y1 = y0 + h;
-        long sumr = 0, sumg = 0, sumb = 0;
-        int num = w * h;
-
-        for (int x = x0; x < x1; x++) {
-            for (int y = y0; y < y1; y++) {
-                Color pixel = new Color(bi.getRGB(x, y));
-                sumr += pixel.getRed();
-                sumg += pixel.getGreen();
-                sumb += pixel.getBlue();
-            }
-        }
-
-        return new Color(sumr / num, sumg / num, sumb / num);
+    public MosaicMaker(String thumbnailsPath, String sourceImagePath, String outputPath, int thumbnailSize)
+            throws ImageNotFoundException, MosaicPrintException, ImageReadException, IOException {
+        // Setup services
+        setupServices();
+        // Process the image.
+        Mosaic mosaic = process(thumbnailsPath, sourceImagePath, thumbnailSize);
+        // Print the image.
+        printMosaic(mosaic, outputPath);
     }
 
     /**
-     * Converts a given Image into a BufferedImage
-     *
-     * @param img The Image to be converted
-     * @return The converted BufferedImage
+     * Set up the services.
      */
-    public static BufferedImage toBufferedImage(Image img)
-    {
-        if (img instanceof BufferedImage)
-        {
-            return (BufferedImage) img;
-        }
-
-        // Create a buffered image with transparency
-        BufferedImage bimage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-
-        // Draw the image on to the buffered image
-        Graphics2D bGr = bimage.createGraphics();
-        bGr.drawImage(img, 0, 0, null);
-        bGr.dispose();
-
-        // Return the buffered image
-        return bimage;
+    private void setupServices() {
+        // Registers services.
+        servicesManager = new ServicesManager()
+                .register(Stream.of(ContentService.class, ImageService.class));
+        // Get the content service.
+        contentService = servicesManager.getService(ContentService.class).get();
+        // Get the image service.
+        imageService = servicesManager.getService(ImageService.class).get();
+        // Setup thumbnails repository.
+        thumbnailRepository = new ThumbnailRepository();
     }
 
-    public static void main(String[] args) {
+    /**
+     * Process the image & thumbnails.
+     * @param thumbnailsPath the path to the thumbnails.
+     * @param sourceImagePath the path to the source image.
+     * @param thumbnailSize the thumbnails' size.
+     * @return the {@link Mosaic}.
+     */
+    private Mosaic process(String thumbnailsPath, String sourceImagePath, int thumbnailSize) throws ImageNotFoundException, ImageReadException, IOException {
+        // Get source image's file.
+        File sourceImageFile = new File(sourceImagePath);
+        // Check if the source image exists.
+        if(sourceImageFile == null || !sourceImageFile.exists())
+            // Throw an exception which will be handled.
+            throw new ImageNotFoundException("Unable to find the source image.");
+
+        // Get the source image as an Image.
+        BufferedImage mosaicImage;
         try {
-            new MosaicMaker();
-        } catch (IOException exception) {
-            exception.printStackTrace();
+            mosaicImage = ImageIO.read(sourceImageFile);
+        } catch (IOException e) {
+            throw new ImageReadException("Unable to read the source image.");
+        }
+
+        // Process the image.
+        mosaicImage = imageService.processImage(mosaicImage,
+                closestMultiple(mosaicImage.getWidth(), thumbnailSize),
+                closestMultiple(mosaicImage.getHeight(), thumbnailSize));
+        // Creating the mosaic.
+        Mosaic mosaic = new Mosaic(mosaicImage, thumbnailSize, this);
+        // Get the size of all the thumbnails.
+        long size = contentService.getFileSize(thumbnailsPath, StorageUnit.KB);
+        // Fetches the files inside the given directory.
+        contentService.getFilesInDirectory(thumbnailsPath, files ->
+            files.forEach(file -> {
+                try {
+                    // Get the file as an image.
+                    BufferedImage image = ImageIO.read(file);
+                    // Process the thumbnail.
+                    image = imageService.processImage(image, thumbnailSize, thumbnailSize);
+                    // Gets the thumbnail's grey shade.
+                    Color greyShade = imageService.getAverageColor(image, 0, 0, image.getWidth(), image.getHeight());
+                    // Choosing which storage type is the best based on the size of the thumbnails.
+                    ThumbnailAbstractFactory factory;
+                    if (size < 100) {
+                        factory = new BaseThumbnailFactory(image, greyShade);
+                    } else {
+                        // Updates the thumbnails.
+                        ImageIO.write(image, "JPEG", file);
+                        factory = new LightThumbnailFactory(file.getPath(), greyShade);
+                    }
+                    // Registers the thumbnail in cache.
+                    thumbnailRepository.registerThumbnail(ThumbnailFactory.getThumbnail(factory));
+                } catch (IOException ignored) {}
+        }));
+
+        return mosaic;
+    }
+
+    /**
+     * Print the {@link Mosaic} into a {@link File}.
+     * @param mosaic the {@link Mosaic} to print.
+     * @param outputPath the output path.
+     */
+    private void printMosaic(Mosaic mosaic, String outputPath) throws MosaicPrintException, ImageReadException {
+        // Print the image.
+        try {
+            ImageIO.write(mosaic.drawMosaic(), "JPEG", new File(outputPath + "mosaic.jpg"));
+        } catch (IOException e) {
+            throw new MosaicPrintException("Unable to print the mosaic.");
         }
     }
 
-    public Logger getLogger() {
-        return logger;
+    /**
+     * Find the closest multiple.
+     * @param n natural integer.
+     * @param x unknown.
+     * @return the closest multiple.
+     */
+    public static int closestMultiple(int n, int x) {
+        if(x > n)
+            return x;
+
+        n = n + x/2;
+        n = n - (n%x);
+
+        return n;
+    }
+
+
+    /**
+     * @return the {@link ServicesManager}.
+     */
+    public ServicesManager getServicesManager() {
+        return servicesManager;
+    }
+
+    /**
+     * @return the {@link ThumbnailRepository}.
+     */
+    public ThumbnailRepository getThumbnailRepository() {
+        return thumbnailRepository;
     }
 }

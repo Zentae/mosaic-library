@@ -1,6 +1,9 @@
 package io.zentae.mosaicmaker.thumbnails;
 
-import java.awt.Color;
+import io.zentae.mosaicmaker.exceptions.ImageReadException;
+
+import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public abstract class Thumbnail {
 
@@ -13,4 +16,5 @@ public abstract class Thumbnail {
     public Color getGreyShade() {
         return greyShade;
     }
+    public abstract BufferedImage getImage() throws ImageReadException;
 }

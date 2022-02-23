@@ -1,8 +1,5 @@
 package io.zentae.mosaicmaker.services.manager;
 
-
-import org.slf4j.Logger;
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -12,20 +9,19 @@ import java.util.stream.Stream;
 
 public class ServicesManager {
 
-    private final Logger logger;
     private final List<Service> serviceList = new ArrayList<>();
 
-    public ServicesManager(Logger logger) {
-        this.logger = logger;
-    }
-
+    /**
+     * Register {@link Service Services}.
+     * @param services the {@link Service Services} to register.
+     * @return {@link ServicesManager this}.
+     */
     public ServicesManager register(Stream<Class<? extends Service>> services) {
         services.forEach(service ->  {
             try {
                 Constructor<?> constructor = service.getConstructor(ServicesManager.class);
                 serviceList.add((Service)constructor.newInstance(this));
             } catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
-                logger.error("Failed to register service shutting down...");
                 System.exit(-1);
             }
         });
@@ -33,6 +29,11 @@ public class ServicesManager {
         return this;
     }
 
+    /**
+     * Get a {@link Service} by its {@link Class}.
+     * @param generic the {@link Service}'s {@link Class}.
+     * @return the targeted {@link Service}.
+     */
     public <T extends Service> Optional<T> getService(Class<T> generic) {
         for(Service service : serviceList) {
             if(service.getClass().equals(generic))
@@ -40,9 +41,5 @@ public class ServicesManager {
         }
 
         return Optional.empty();
-    }
-
-    public Logger getLogger() {
-        return logger;
     }
 }

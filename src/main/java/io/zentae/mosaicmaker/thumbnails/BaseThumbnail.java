@@ -12,7 +12,8 @@ public class BaseThumbnail extends Thumbnail {
         this.thumbnail = thumbnail;
     }
 
-    public BufferedImage getThumbnail() {
+    @Override
+    public BufferedImage getImage() {
         return thumbnail;
     }
 }
