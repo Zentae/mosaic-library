@@ -11,6 +11,7 @@ import io.zentae.mosaicmaker.thumbnails.factories.LightThumbnailFactory;
 import io.zentae.mosaicmaker.thumbnails.factories.ThumbnailAbstractFactory;
 import io.zentae.mosaicmaker.thumbnails.factories.ThumbnailFactory;
 import io.zentae.mosaicmaker.thumbnails.repository.ThumbnailRepository;
+import io.zentae.mosaicmaker.utils.StorageUnit;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

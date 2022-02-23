@@ -1,6 +1,6 @@
 package io.zentae.mosaicmaker.services;
 
-import io.zentae.mosaicmaker.StorageUnit;
+import io.zentae.mosaicmaker.utils.StorageUnit;
 import io.zentae.mosaicmaker.services.manager.Service;
 import io.zentae.mosaicmaker.services.manager.ServicesManager;
 

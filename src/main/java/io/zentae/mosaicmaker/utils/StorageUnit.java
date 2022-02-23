@@ -1,4 +1,4 @@
-package io.zentae.mosaicmaker;
+package io.zentae.mosaicmaker.utils;
 
 public enum StorageUnit {
 
@@ -49,7 +49,7 @@ public enum StorageUnit {
      * @return the converted value from the source {@link StorageUnit Unit} into the target one.
      */
     public long to(StorageUnit storageUnit, long value) {
-        double convertScale = (storageUnit.getByteValue() / byteValue);
+        double convertScale = (double)(storageUnit.getByteValue() / byteValue);
         double destinationByteValue = storageUnit.getByteValue();
         double sourceByteValue = byteValue;
 
