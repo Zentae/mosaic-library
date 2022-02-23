@@ -4,32 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="55a4d993-9a95-43e0-a311-2a3458724a1f" name="Changes" comment="Changes">
-      <change afterPath="$PROJECT_DIR$/src/main/java/io/zentae/mosaicmaker/Mosaic.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/io/zentae/mosaicmaker/StorageUnit.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/io/zentae/mosaicmaker/exceptions/ImageNotFoundException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/io/zentae/mosaicmaker/exceptions/ImageReadException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/io/zentae/mosaicmaker/exceptions/MosaicPrintException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/mosaic-maker.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/mosaic-maker.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/zentae/mosaicmaker/MosaicMaker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/zentae/mosaicmaker/MosaicMaker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/zentae/mosaicmaker/services/ContentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/zentae/mosaicmaker/services/ContentService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/zentae/mosaicmaker/services/ImageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/zentae/mosaicmaker/services/ImageService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/zentae/mosaicmaker/services/manager/Service.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/zentae/mosaicmaker/services/manager/Service.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/zentae/mosaicmaker/services/manager/ServicesManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/zentae/mosaicmaker/services/manager/ServicesManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/zentae/mosaicmaker/thumbnails/BaseThumbnail.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/zentae/mosaicmaker/thumbnails/BaseThumbnail.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/zentae/mosaicmaker/thumbnails/LightThumbnail.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/zentae/mosaicmaker/thumbnails/LightThumbnail.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/zentae/mosaicmaker/thumbnails/Thumbnail.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/zentae/mosaicmaker/thumbnails/Thumbnail.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/zentae/mosaicmaker/thumbnails/factories/BaseThumbnailFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/zentae/mosaicmaker/thumbnails/factories/BaseThumbnailFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/zentae/mosaicmaker/thumbnails/factories/ThumbnailAbstractFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/zentae/mosaicmaker/thumbnails/factories/ThumbnailAbstractFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/zentae/mosaicmaker/thumbnails/factories/ThumbnailFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/zentae/mosaicmaker/thumbnails/factories/ThumbnailFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/zentae/mosaicmaker/thumbnails/repository/ThumbnailRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/zentae/mosaicmaker/thumbnails/repository/ThumbnailRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/11547842.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/logback.xml" beforeDir="false" />
-    </list>
+    <list default="true" id="55a4d993-9a95-43e0-a311-2a3458724a1f" name="Changes" comment="Changes" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -145,6 +120,7 @@
       <workItem from="1645446235705" duration="14692000" />
       <workItem from="1645628505625" duration="11142000" />
       <workItem from="1645645783294" duration="5000" />
+      <workItem from="1645645923969" duration="46000" />
     </task>
     <servers />
   </component>

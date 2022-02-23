@@ -29,7 +29,7 @@ public class ContentService extends Service {
     public long getFileSize(String filePath, StorageUnit storageUnit) {
         try {
             // Get the file's path.
-            Path path = Paths.get(System.getProperty("user.dir") + filePath);
+            Path path = Paths.get(filePath);
             // Return converted file's size.
             return StorageUnit.B.to(storageUnit, Files.size(path));
         } catch (IOException e) {
@@ -46,7 +46,6 @@ public class ContentService extends Service {
      * @return {@link ContentService this}
      */
     public ContentService getFilesInDirectory(String path, Consumer<Stream<File>> filesConsumer) throws IOException {
-        path = System.getProperty("user.dir") + path;
         filesConsumer.accept(Files.walk(Paths.get(path), FileVisitOption.FOLLOW_LINKS)
                 .filter(Files::isRegularFile)
                 .map(Path::toFile));
