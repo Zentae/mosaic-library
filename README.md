@@ -32,3 +32,5 @@ try {
     e.printStackTrace();
 }
 ```
+
+![alt text](https://github.com/Zentae/mosaic-maker/blob/master/mosaic.jpg?raw=true)
