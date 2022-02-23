@@ -33,4 +33,5 @@ try {
 }
 ```
 
-![alt text](https://github.com/Zentae/mosaic-maker/blob/master/mosaic.jpg?raw=true)
+![alt text](https://github.com/Zentae/mosaic-maker/blob/master/results/1.jpg?raw=true)
+![alt text](https://github.com/Zentae/mosaic-maker/blob/master/results/2.jpg?raw=true)
