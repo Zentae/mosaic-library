@@ -7,7 +7,7 @@ String userDir = System.getProperty("user.dir") + "\\";
 // Define thumbnails path.
 String thumbnailsPath = userDir + "thumbnails\\";
 // Define thumbnails' size.
-int thumbnailsSize = 1
+int thumbnailsSize = 1;
 // Define source image path.
 String sourceImagePath = userDir + "sourceImage.jpg";
 // Instantiate our mosaic maker.
