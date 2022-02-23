@@ -1,6 +1,8 @@
 # mosaic-maker
 Mosaic maker module made in java with love &lt;3
 
+## How to use it
+
 ```java
 // Define user directory.
 String userDir = System.getProperty("user.dir") + "\\";
