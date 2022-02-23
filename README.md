@@ -32,6 +32,8 @@ try {
     e.printStackTrace();
 }
 ```
-
-![alt text](https://github.com/Zentae/mosaic-maker/blob/master/results/1.jpg?raw=true)
-![alt text](https://github.com/Zentae/mosaic-maker/blob/master/results/2.jpg?raw=true)
+# Some examples
+![alt text](https://github.com/Zentae/mosaic-maker/blob/master/results/mosaic-1.jpg?raw=true)
+1,47Mo
+![alt text](https://github.com/Zentae/mosaic-maker/blob/master/results/mosaic-2.jpg?raw=true)
+75Ko
