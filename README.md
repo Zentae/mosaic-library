@@ -1,5 +1,5 @@
 # mosaic-maker
-Mosaic maker module made in java with love &lt;3
+Mosaic maker module made in java with love &lt;3 and weighting only 22ko !
 
 ## How to use it
 
@@ -34,7 +34,7 @@ try {
     e.printStackTrace();
 }
 ```
-# Some examples
+## Some examples
 ![alt text](https://github.com/Zentae/mosaic-maker/blob/master/results/mosaic-1.jpg?raw=true)
 1,47Mo
 ![alt text](https://github.com/Zentae/mosaic-maker/blob/master/results/mosaic-2.jpg?raw=true)
