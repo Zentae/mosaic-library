@@ -1,5 +1,5 @@
 # mosaic-maker
-Mosaic maker module made in java with love &lt;3 and weighting only 22ko !
+Mosaic maker is a light weigth library made in java with love &lt;3
 
 ## How to use it
 
