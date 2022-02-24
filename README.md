@@ -36,6 +36,9 @@ try {
 ```
 ## Some examples
 ![alt text](https://github.com/Zentae/mosaic-maker/blob/master/results/mosaic-1.jpg?raw=true)
-1,47Mo
+373ko
 ![alt text](https://github.com/Zentae/mosaic-maker/blob/master/results/mosaic-2.jpg?raw=true)
+477ko
+![alt text](https://github.com/Zentae/mosaic-maker/blob/master/results/mosaic-3.jpg?raw=true)
 75Ko
+
