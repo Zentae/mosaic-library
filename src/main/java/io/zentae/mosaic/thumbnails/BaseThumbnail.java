@@ -1,8 +1,11 @@
-package io.zentae.mosaicmaker.thumbnails;
+package io.zentae.mosaic.thumbnails;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+/**
+ * Basic thumbnail. Higher memory usage, but lower processor usage.
+ */
 public class BaseThumbnail extends Thumbnail {
 
     private final BufferedImage thumbnail;

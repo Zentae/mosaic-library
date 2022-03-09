@@ -1,6 +1,6 @@
-package io.zentae.mosaicmaker.thumbnails;
+package io.zentae.mosaic.thumbnails;
 
-import io.zentae.mosaicmaker.exceptions.ImageReadException;
+import io.zentae.mosaic.exception.ImageReadException;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -9,7 +9,7 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Lightweight thumbnail. Low memory usage, but higher processor usage.
+ * Lightweight thumbnail. Lower memory usage, but higher processor usage.
  */
 public class LightThumbnail extends Thumbnail {
 

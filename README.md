@@ -1,38 +1,27 @@
-# mosaic-maker
-Mosaic maker is a light weigth library made in java with love &lt;3
+# mosaic-library
+Lightweight library made in java with love &lt;3
 
 ## How to use it
-
+Draw the thumbnails.
 ```java
-// Define user directory.
-String userDir = System.getProperty("user.dir") + "\\";
-// Define thumbnails path.
-String thumbnailsPath = userDir + "thumbnails\\";
-// Define thumbnails' size.
-int thumbnailsSize = 1;
-// Define source image path.
-String sourceImagePath = userDir + "sourceImage.jpg";
-// Instantiate our mosaic maker.
-MosaicMaker maker = new MosaicMaker();
-
-try {
-    // Creates our mosaic.
-    Mosaic mosaic = maker.process(thumbnailsPath, sourceImagePath, thumbnailsSize);
-    // Print our mosaic inside a file.
-    maker.printMosaic(mosaic, userDir);
-} catch (ImageNotFoundException e) {
-    // Cannot find the source image.
-    e.printStackTrace();
-} catch (ImageReadException e) {
-    // Failed to read the image.
-    e.printStackTrace();
-} catch (IOException e) {
-    // Java's IOException.
-    e.printStackTrace();
-} catch (MosaicPrintException e) {
-    // Failed to print the mosaic into the given file.
-    e.printStackTrace();
-}
+int thumbnailsLength = 20;
+// Thumbnails.
+Image[][] thumbnails = new Image[thumbnailsLength][thumbnailsLength];
+// Thumbnail's dimension.
+Dimension thumbnailDimension = new Dimension(20, 20);
+// Create the mosaic's drawer.
+Drawer thumbnailDrawer = new ThumbnailsDrawer(image thumbnailDimension);
+// Draw the thumbnail.
+Image thumbnail = thumbnailDrawer.draw();
+```
+Draw the mosaic.
+```java
+//...
+Dimension mosaicDimension = new Dimension(20, 20);
+// Create the mosaic's drawer.
+Drawer mosaicDrawer = new MosaicDrawer(image, thumbnails, mosaicDimension);
+// Draw the picture.
+Image mosaic = mosaicDrawer.draw();
 ```
 ## Some examples
 ![alt text](https://github.com/Zentae/mosaic-maker/blob/master/results/mosaic-1.jpg?raw=true)
@@ -41,4 +30,3 @@ try {
 477ko
 ![alt text](https://github.com/Zentae/mosaic-maker/blob/master/results/mosaic-3.jpg?raw=true)
 75Ko
-
