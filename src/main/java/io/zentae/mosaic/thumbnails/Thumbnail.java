@@ -1,6 +1,6 @@
-package io.zentae.mosaicmaker.thumbnails;
+package io.zentae.mosaic.thumbnails;
 
-import io.zentae.mosaicmaker.exceptions.ImageReadException;
+import io.zentae.mosaic.exception.ImageReadException;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
