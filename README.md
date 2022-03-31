@@ -10,7 +10,7 @@ Image[][] thumbnails = new Image[thumbnailsLength][thumbnailsLength];
 // Thumbnail's dimension.
 Dimension thumbnailDimension = new Dimension(20, 20);
 // Create the mosaic's drawer.
-Drawer thumbnailDrawer = new ThumbnailsDrawer(image thumbnailDimension);
+Drawer thumbnailDrawer = new ThumbnailsDrawer(image, thumbnailDimension);
 // Draw the thumbnail.
 Image thumbnail = thumbnailDrawer.draw();
 ```
